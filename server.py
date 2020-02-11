@@ -105,7 +105,7 @@ def greet_person():
     """.format(player, compliment)
 
 @app.route("/insult")
-def greet_person():
+def insult():
     """Get user by name."""
 
     player2 = request.args.get("person2")
