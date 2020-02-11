@@ -8,6 +8,7 @@ from flask import Flask, request
 # Flask wants to know this to know what any imported things are relative to.
 app = Flask(__name__)
 
+NOTAWESOME = ['bad', 'mean', 'ugly']
 AWESOMENESS = [
     'awesome', 'terrific', 'fantastic', 'neato', 'fantabulous', 'wowza',
     'oh-so-not-meh', 'brilliant', 'ducky', 'coolio', 'incredible',
@@ -54,9 +55,30 @@ def say_hello():
             </select>
             <input type="submit" value="Submit">
         </form>
+        <a href="http://localhost:5000/diss">Click for insult</a>
       </body>
     </html>
     """
+
+@app.route("/diss")
+def say_diss():
+
+    return"""
+    <!doctype html>
+    <html>
+      <head>
+        <title>Hi There!</title>
+      </head>
+      <body>
+        <h1>Hi There!</h1>
+        <form action="/insult">
+          What's your name? <input type="text" name="person2">
+            <input type="submit" value="Submit">
+        </form>
+      </body>
+    </html>
+    """
+
 
 
 @app.route("/greet")
@@ -66,7 +88,7 @@ def greet_person():
     player = request.args.get("person")
     compliment = request.args.get("compliment")
 
-    #compliment = choice(AWESOMENESS)
+    #insult = choice(NOTAWESOME)
 
     #y = x
 
@@ -81,6 +103,29 @@ def greet_person():
       </body>
     </html>
     """.format(player, compliment)
+
+@app.route("/insult")
+def greet_person():
+    """Get user by name."""
+
+    player2 = request.args.get("person2")
+    #compliment = request.args.get("compliment")
+
+    insult = choice(NOTAWESOME)
+
+    #y = x
+
+    return """
+    <!doctype html>
+    <html>
+      <head>
+        <title>A Compliment</title>
+      </head>
+      <body>
+        Hi, {}! I think you're {}!
+      </body>
+    </html>
+    """.format(player2, insult)
 
 
 if __name__ == "__main__":
